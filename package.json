@@ -1,0 +1,25 @@
+{
+    "name": "firstparking",
+    "version": "1.0.0",
+    "description": "A car parking assistant to find location for parking space within user location",
+    "main": "y",
+    "scripts": {
+        "test": "run car",
+        "lint": "eslint src/js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "y"
+    },
+    "keywords": [
+        "v11-geckos-team-14"
+    ],
+    "author": "v11-geckos-team-14",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.3.0"
+    }
+}
