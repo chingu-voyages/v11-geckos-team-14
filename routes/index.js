@@ -20,6 +20,17 @@ MongoClient.connect('mongodb://127.0.0.1:8000/firstparking', function(err, db) {
     dbo = db;
 });
 
+/*
+The mapbox access api way
+//https://api.mapbox.com/{endpoint}?access_token={your_access_token}
+*/
+
+//Route for getting near by parking slots
+Router.get('/getParkData', function(req, res) {
+    var getDataRecurssive = new getDataRecurssive(req.query.latitude, req.query.longitude, req.query.radius, res);
+    getDataRecurssive.getData();
+});
+
 
 app.get('/', (req, res) => {
     res.send('First Parking App!')
