@@ -32,6 +32,31 @@ Router.get('/getParkData', function(req, res) {
 });
 
 
+//Route for checking availability of a parking slot
+Router.get('/checkAvailability', function(req, res) {
+    var placeId = {
+        status: "ok",
+        "placeId": req.query.placeId
+    };
+    var availCollection = dbo.collection('availability');
+    availCollection.findOne({
+        placeId: req.query.placeId
+    }, function(err, item) {
+        if (item) placeId.item = item;
+        else placeId.status = "Not available";
+        res.send(placeId);
+    });
+});
+
+//Route for fetching all objects from availability collection
+router.get("/getAllAvailability", function(req, res) {
+    var availCollection = dbo.collection('availability');
+    availCollection.find().toArray(function(err, result) {
+        res.send(result);
+    });
+});
+
+
 app.get('/', (req, res) => {
     res.send('First Parking App!')
 });
