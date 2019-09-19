@@ -56,6 +56,12 @@ router.get("/getAllAvailability", function(req, res) {
     });
 });
 
+//Route for removing all objects from availability collection
+router.get("/removePlace", function(req, res) {
+    var availCollection = dbo.collection('availability');
+    availCollection.remove({ placeId: req.query.placeId });
+    res.send("done");
+});
 
 app.get('/', (req, res) => {
     res.send('First Parking App!')
