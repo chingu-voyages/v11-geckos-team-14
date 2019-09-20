@@ -48,6 +48,49 @@ Router.get('/checkAvailability', function(req, res) {
     });
 });
 
+
+/*
+ Route for adding google place - custom parking lot creation
+ Query Param: latitude
+ Query Param: longitude
+ Query Param: name
+ Query Param: address
+ */
+router.get("/addPlaceToMap", function(req, res) {
+    var requestUrl = '';
+    var type = "parking";
+    if (req.query.type) {
+        type = req.query.type;
+    }
+    var newData = {
+        "location": {
+            "lat": parseFloat(req.query.latitude),
+            "lng": parseFloat(req.query.longitude)
+        },
+        "accuracy": 50,
+        "name": req.query.name,
+        "address": req.query.address,
+        "types": [type]
+    };
+    var options = {
+        host: 'maps.mapbox.com',
+        uri: requestUrl,
+        method: 'POST',
+        json: newData
+    };
+    request(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(newData);
+            console.log(typeof(body));
+            if (body.status == 'OK') {
+                res.send("Added " + req.query.name + "\n PlaceID :" + body.place_id);;
+            } else {
+                res.send(" Failed..!!! ");
+            }
+        }
+    });
+});
+
 //Route for fetching all objects from availability collection
 router.get("/getAllAvailability", function(req, res) {
     var availCollection = dbo.collection('availability');
@@ -70,3 +113,6 @@ app.get('/', (req, res) => {
 app.listen(8000, () => {
     console.log('First Parking listening on port 8000!')
 });
+
+
+module.exports = router;
