@@ -50,7 +50,7 @@ Router.get('/checkAvailability', function(req, res) {
 
 
 /*
- Route for adding google place - custom parking lot creation
+ Route for adding parking spot - custom parking lot creation
  Query Param: latitude
  Query Param: longitude
  Query Param: name
