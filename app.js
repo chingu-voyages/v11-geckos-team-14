@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var chalk = require('chalk');
+var mongo = require('mongodb');
 var routes = require('./routes/index');
 var app = express();
 
@@ -11,6 +13,11 @@ app.use(express.static(__dirname + '/views'));
 
 //route configuration
 app.use('/', routes);
+
+//listening for the port
+app.listen(8080, function() {
+    console.log(`Listening on port" + ${chalk.green('8080')}`)
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
