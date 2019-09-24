@@ -15,8 +15,8 @@ app.use(express.static(__dirname + '/views'));
 app.use('/', routes);
 
 //listening for the port
-app.listen(8080, function() {
-    console.log(`Listening on port" + ${chalk.green('8080')}`)
+app.listen(8000, function() {
+    console.log(`Listening on port" ${chalk.green('8000')}`)
 })
 
 // catch 404 and forward to error handler

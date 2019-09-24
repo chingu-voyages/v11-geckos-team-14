@@ -110,9 +110,4 @@ app.get('/', (req, res) => {
     res.send('First Parking App!')
 });
 
-app.listen(8080, () => {
-    console.log(`First Parking listening on port ${chalk.green('8080')}`)
-});
-
-
 module.exports = router;
