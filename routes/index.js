@@ -1,24 +1,24 @@
-const express = require('express')
-const router = express.Router()
-const request = require('request')
+var express = require('express')
+var router = express.Router()
+var chalk = require('chalk')
+var request = require('request')
 var MongoClient = require('mongodb').MongoClient
-const app = express();
+var app = express();
 
-//Database object
+//Mongo connection
 var dbo;
+var url = "mongodb://localhost:27017/fpdb";
+
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    console.log("Database created")
+    db.close();
+});
 
 //Loading First Parking Homepage
 router.get('/', function(req, res, next) {
     res.sendFile('index.html');
 })
-
-//Mongodb connection
-MongoClient.connect('mongodb://127.0.0.1:8000/firstparking', function(err, db) {
-    if (err) {
-        console.dir(err)
-    }
-    dbo = db;
-});
 
 /*
 The mapbox access api way
@@ -26,14 +26,14 @@ The mapbox access api way
 */
 
 //Route for getting near by parking slots
-Router.get('/getParkData', function(req, res) {
+router.get('/getParkData', function(req, res) {
     var getDataRecurssive = new getDataRecurssive(req.query.latitude, req.query.longitude, req.query.radius, res);
     getDataRecurssive.getData();
 });
 
 
 //Route for checking availability of a parking slot
-Router.get('/checkAvailability', function(req, res) {
+router.get('/checkAvailability', function(req, res) {
     var placeId = {
         status: "ok",
         "placeId": req.query.placeId
@@ -110,8 +110,8 @@ app.get('/', (req, res) => {
     res.send('First Parking App!')
 });
 
-app.listen(8000, () => {
-    console.log('First Parking listening on port 8000!')
+app.listen(8080, () => {
+    console.log(`First Parking listening on port ${chalk.green('8080')}`)
 });
 
 
