@@ -48,6 +48,29 @@ router.get('/checkAvailability', function(req, res) {
     });
 });
 
+/*
+ Route for inserting parking slot status for a particular placeID
+ Query Param: parks - string separated by ',' ,which defines the name of the slot
+ */
+router.get("/insertParkers", function(req, res) {
+    var availCollection = dbo.collection('availability');
+    var parks = req.query.parks.split(",");
+    var pStatus = req.query.pStatus.split(",");
+    var pMap = {
+        parkmap: {}
+    };
+    for (var i = 0; i < parks.length; i++) {
+        pMap.parkmap[parks[i]] = pStatus[i];
+    }
+    pMap = flattenObject(pMap);
+    availCollection.update({
+        placeId: req.query.placeId
+    }, {
+        $set: pMap
+    });
+    res.send("Update fired : " + req.query.placeId);
+});
+
 
 /*
  Route for adding parking spot - custom parking lot creation
