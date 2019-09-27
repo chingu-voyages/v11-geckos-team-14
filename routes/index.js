@@ -49,7 +49,7 @@ router.get('/checkAvailability', function(req, res) {
 });
 
 /*
- Route for inserting parking slot status for a particular placeID
+ Route for adding parking slot status for a particular placeID
  Query Param: parks - string separated by ',' ,which defines the name of the slot
  */
 router.get("/insertParkers", function(req, res) {
