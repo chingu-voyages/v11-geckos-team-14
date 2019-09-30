@@ -9,6 +9,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/views'));
+
+
 //Store all HTML files in view folder.
 
 //route configuration
