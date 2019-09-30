@@ -8,6 +8,7 @@ var app = express();
 //Mongo connection
 var dbo;
 var url = "mongodb://localhost:27017/fpdb";
+//url https://cloud.mongodb.com/v2/5d9242a8cf09a266f5d82e10#metrics/replicaSet/5d9243e7fd4cbae70af2f7a8/explorer/firstparking
 
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
