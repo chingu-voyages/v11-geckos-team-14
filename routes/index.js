@@ -11,7 +11,7 @@ var url = "mongodb://localhost:27017/fpdb";
 
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    console.log("Database created")
+    console.log("First Parking database is connected!")
     db.close();
 });
 
