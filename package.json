@@ -2,10 +2,18 @@
     "name": "firstparking",
     "version": "1.0.0",
     "description": "A car parking assistant to find location for parking space within user location",
-    "main": "y",
+    "main": "app.js",
     "scripts": {
+        "start": "node ./bin/www",
         "test": "run car",
-        "lint": "eslint src/js"
+        "lint": "eslint src/js",
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "repository": {
         "type": "git",
@@ -17,7 +25,11 @@
     "author": "v11-geckos-team-14",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1"
+        "bootstrap": "^3.4.1",
+        "express": "^4.17.1",
+        "hbs": "^4.0.5",
+        "mongodb": "^3.3.2",
+        "request": "^2.88.0"
     },
     "devDependencies": {
         "eslint": "^6.4.0"
