@@ -3,12 +3,15 @@ var path = require('path');
 var chalk = require('chalk');
 var mongo = require('mongodb');
 var routes = require('./routes/index');
+//var user = require('./models');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/views'));
+//app.use(user);
+
 //Store all HTML files in view folder.
 
 //route configuration
