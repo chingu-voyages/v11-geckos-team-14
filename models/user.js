@@ -8,7 +8,7 @@
      telephone: { type: String, required: true },
      email: { type: String, unique: true, required: [true, "email can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true },
      hash: { type: String, required: true },
-     carParkLocation: { type: String, required: true },
+     role: { type: Number, required: true }
  }, { timestamps: true });
 
  UserSchema.statics.authentication = (email, password, callback) => {
