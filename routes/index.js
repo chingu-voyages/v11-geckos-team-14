@@ -1,25 +1,35 @@
-var express = require('express')
-var router = express.Router()
-var chalk = require('chalk')
-var request = require('request')
-var MongoClient = require('mongodb').MongoClient
-var app = express();
+const express = require('express');
+const chalk = require('chalk');
+const request = require('request');
+const MongoClient = require('mongodb').MongoClient
+const router = express.Router();
+const app = express();
 
 //Mongo connection
-var dbo;
-var url = "mongodb://localhost:27017/fpdb";
-//url https://cloud.mongodb.com/v2/5d9242a8cf09a266f5d82e10#metrics/replicaSet/5d9243e7fd4cbae70af2f7a8/explorer/firstparking
-
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    console.log("First Parking database is connected!")
-    db.close();
+const uri = "mongodb+srv://user1:<user1>@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("firstparking").collection("users");
+    // perform actions on the collection object
+    if (err) {
+        console.log("Database conncetion failed!")
+    } else {
+        console.log("Database connection successful!")
+    }
+    client.close();
 });
 
 //Loading First Parking Homepage
 router.get('/', function(req, res, next) {
     res.sendFile('index.html');
-})
+});
+
+app.get('/', function(req, res) {
+    if (req !== null) {
+        res.send('index.html');
+    }
+});
+
 
 /*
 The mapbox access api way
@@ -27,19 +37,18 @@ The mapbox access api way
 */
 
 //Route for getting near by parking slots
-router.get('/getParkData', function(req, res) {
+router.get('/getParkingSlotData', function(req, res) {
     var getDataRecurssive = new getDataRecurssive(req.query.latitude, req.query.longitude, req.query.radius, res);
     getDataRecurssive.getData();
 });
 
-
 //Route for checking availability of a parking slot
-router.get('/checkAvailability', function(req, res) {
+router.get('/checkParkingSlots', function(req, res) {
     var placeId = {
         status: "ok",
         "placeId": req.query.placeId
     };
-    var availCollection = dbo.collection('availability');
+    var availCollection = client.db("firstparking").collection("location");
     availCollection.findOne({
         placeId: req.query.placeId
     }, function(err, item) {
@@ -49,12 +58,10 @@ router.get('/checkAvailability', function(req, res) {
     });
 });
 
-/*
- Route for adding parking slot status for a particular placeID
- Query Param: parks - string separated by ',' ,which defines the name of the slot
- */
-router.get("/insertParkers", function(req, res) {
-    var availCollection = dbo.collection('availability');
+
+//Route for adding parking slot status for a particular placeID
+router.get("/addParkingSlots", function(req, res) {
+    var availCollection = client.db('firstparking').collection('location');
     var parks = req.query.parks.split(",");
     var pStatus = req.query.pStatus.split(",");
     var pMap = {
@@ -73,14 +80,8 @@ router.get("/insertParkers", function(req, res) {
 });
 
 
-/*
- Route for adding parking spot - custom parking lot creation
- Query Param: latitude
- Query Param: longitude
- Query Param: name
- Query Param: address
- */
-router.get("/addPlaceToMap", function(req, res) {
+//Route for adding parking spot - custom parking lot creation
+router.get("/addLocations", function(req, res) {
     var requestUrl = '';
     var type = "parking";
     if (req.query.type) {
@@ -116,22 +117,19 @@ router.get("/addPlaceToMap", function(req, res) {
 });
 
 //Route for fetching all objects from availability collection
-router.get("/getAllAvailability", function(req, res) {
-    var availCollection = dbo.collection('availability');
+router.get("/getAllLocations", function(req, res) {
+    var availCollection = client.db('firstparking').collection('location');
     availCollection.find().toArray(function(err, result) {
         res.send(result);
     });
 });
 
 //Route for removing all objects from availability collection
-router.get("/removePlace", function(req, res) {
-    var availCollection = dbo.collection('availability');
+router.get("/removeLocations", function(req, res) {
+    var availCollection = client.db('firstparking').collection('location');
     availCollection.remove({ placeId: req.query.placeId });
     res.send("done");
 });
 
-app.get('/', (req, res) => {
-    res.send('First Parking App!')
-});
 
 module.exports = router;

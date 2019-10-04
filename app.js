@@ -1,13 +1,14 @@
-var express = require('express');
-var path = require('path');
-var chalk = require('chalk');
-var mongo = require('mongodb');
-var routes = require('./routes/index');
-var user = require('./models/user');
-var carowner = require('./models/car-owner');
-var serviceprovider = require('./models/service-provider');
-var userprofile = require('./models/user-profile');
-var app = express();
+const express = require('express');
+const path = require('path');
+const chalk = require('chalk');
+const mongo = require('mongodb');
+const routes = require('./routes/index');
+const user = require('./models/user');
+const carowner = require('./models/car-owner');
+const serviceprovider = require('./models/service-provider');
+const userprofile = require('./models/user-profile');
+const MongoClient = require('mongodb').MongoClient
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
