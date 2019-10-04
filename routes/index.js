@@ -7,7 +7,7 @@ const app = express();
 
 //Mongo connection
 const uri = "mongodb+srv://user1:<user1>@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 client.connect(err => {
     const collection = client.db("firstparking").collection("users");
     // perform actions on the collection object
