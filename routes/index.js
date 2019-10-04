@@ -6,18 +6,22 @@ const router = express.Router();
 const app = express();
 
 //Mongo connection
-const uri = "mongodb+srv://user1:<user1>@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-client.connect(err => {
-    const collection = client.db("firstparking").collection("users");
-    // perform actions on the collection object
+const uri = "mongodb+srv://user1:user1@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
+
+MongoClient.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true }, function(err, client) {
     if (err) {
-        console.log("Database conncetion failed!")
+        console.log('An error occurred connecting to MongoDB: ', err)
     } else {
-        console.log("Database connection successful!")
+        const db = client.db('firstparking');
+        db.collection('users', function(err, collection) {
+            collection.find().toArray(function(err, res) {
+                if (err) return err;
+                return res;
+            })
+        })
     }
     client.close();
-});
+})
 
 //Loading First Parking Homepage
 router.get('/', function(req, res, next) {
