@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const request = require('request');
 const MongoClient = require('mongodb').MongoClient
 const router = express.Router();
+const MapboxClient = require('mapbox');
 const app = express();
 
 //Mongo connection
@@ -34,11 +35,15 @@ app.get('/', function(req, res) {
     }
 });
 
-
-/*
-The mapbox access api way
-//https://api.mapbox.com/{endpoint}?access_token={your_access_token}
-*/
+//The MapBox API access
+const client = new MapboxClient('pk.eyJ1Ijoic2FtdWVsb2tlbGxvZ3VtIiwiYSI6ImNqemZnYXVzejAyMDQzZ280NGo0aDBsbzgifQ.n3aTh1uXQs8gczGexkbTKA');
+client.geocodeForward('')
+    .then(function(res) { // res is the http response, including: status, headers and entity properties
+        var data = res.entity; // data is the geocoding result as parsed JSON
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 //Route for getting near by parking slots
 router.get('/getParkingSlotData', function(req, res) {
