@@ -6,6 +6,8 @@ const router = express.Router();
 const MapboxClient = require('mapbox');
 const app = express();
 
+app.use(express.urlencoded());
+
 //Mongo connection
 const uri = "mongodb+srv://user1:user1@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
 
@@ -29,12 +31,6 @@ router.get('/', function(req, res, next) {
     res.sendFile('index.html');
 });
 
-app.get('/', function(req, res) {
-    if (req !== null) {
-        res.send('index.html');
-    }
-});
-
 //The MapBox API access
 const client = new MapboxClient('pk.eyJ1Ijoic2FtdWVsb2tlbGxvZ3VtIiwiYSI6ImNqemZnYXVzejAyMDQzZ280NGo0aDBsbzgifQ.n3aTh1uXQs8gczGexkbTKA');
 client.geocodeForward('')
@@ -43,7 +39,7 @@ client.geocodeForward('')
     })
     .catch(err => {
         console.log(err)
-    })
+    });
 
 //Route for getting near by parking slots
 router.get('/getParkingSlotData', function(req, res) {

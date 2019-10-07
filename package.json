@@ -26,8 +26,10 @@
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^3.0.6",
+        "body-parser": "^1.19.0",
         "bootstrap": "^3.4.1",
         "express": "^4.17.1",
+        "express-validator": "^6.2.0",
         "mapbox": "^1.0.0-beta10",
         "mongodb": "^3.3.2",
         "mongoose": "^5.7.3",
