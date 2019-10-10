@@ -11,75 +11,73 @@
      role: { type: Number, required: true, enum: ['Car Owner', 'Park Owner'] }
  }, { timestamps: true });
 
- UserSchema.statics.authentication = (email, password, callback) => {
+ //  UserSchema.statics.authentication = (email, password, callback) => {
 
-     User.findOne({ email: email, password: password }, function(err, user) {
-         console.log('calling+', user);
-         //bcrypt.compare(password,password, function(err,result){
-         if (err || user == null) {
-             return callback(err);
-         } else {
-             return callback(null, user);
-         }
-         //})
-     })
+ //      User.findOne({ email: email, password: password }, function(err, user) {
+ //          console.log('calling+', user);
+ //          //bcrypt.compare(password,password, function(err,result){
+ //          if (err || user == null) {
+ //              return callback(err);
+ //          } else {
+ //              return callback(null, user);
+ //          }
+ //          //})
+ //      })
 
+ //  }
+ //  UserSchema.statics.registration = (userdata, callback) => {
+ //      return User.create({
+ //          username: userdata.username,
+ //          telephone: userdata.telephone,
+ //          email: userdata.email,
+ //          password: bcrypt.hashSync(userdata.password, BCRYPT_SALT_ROUNDS),
 
-
- }
- UserSchema.statics.registration = (userdata, callback) => {
-     return User.create({
-         username: userdata.username,
-         telephone: userdata.telephone,
-         email: userdata.email,
-         password: bcrypt.hashSync(userdata.password, BCRYPT_SALT_ROUNDS),
-
-     }, function(err, result) {
-         if (err) {
-             return callback(err);
-         } else {
-             return callback(null, result);
-         }
-     });
+ //      }, function(err, result) {
+ //          if (err) {
+ //              return callback(err);
+ //          } else {
+ //              return callback(null, result);
+ //          }
+ //      });
 
 
-     /*var ContactModel = mongoose.model('users',UserSchema);
-     var contactModel = new ContactModel({
-         name:userdata.name,
-         email:userdata.email,
-         password:userdata.password,
-     });
-     contactModel.save(); */
- }
+ /*var ContactModel = mongoose.model('users',UserSchema);
+ var contactModel = new ContactModel({
+     name:userdata.name,
+     email:userdata.email,
+     password:userdata.password,
+ });
+ contactModel.save(); */
+ // }
 
 
- UserSchema.statics.userprofiledata = (userId, callback) => {
+ //  UserSchema.statics.userprofiledata = (userId, callback) => {
 
-     return User.findOne({ _id: userId }).exec(function(err, user) {
-         if (err) {
-             return callback(err);
-         } else if (!user) {
-             var err = new Error('User does not exist');
-             err.status = 401;
-             // return callback(err);
-         } else if (user) {
-             //console.log('userprofiledata_userId->',user);
-             return callback(null, user);
-         }
-     })
- }
+ //      return User.findOne({ _id: userId }).exec(function(err, user) {
+ //          if (err) {
+ //              return callback(err);
+ //          } else if (!user) {
+ //              var err = new Error('User does not exist');
+ //              err.status = 401;
+ //              // return callback(err);
+ //          } else if (user) {
+ //              //console.log('userprofiledata_userId->',user);
+ //              return callback(null, user);
+ //          }
+ //      })
+ //  }
 
- UserSchema.statics.userprofileupdate = (userdata, callback) => {
-     return User.updateOne({ _id: userdata.uid }, {
-         username: userdata.username,
-         telephone: userdata.telephone,
-         email: userdata.email,
-         password: userdata.password,
+ //  UserSchema.statics.userprofileupdate = (userdata, callback) => {
+ //      return User.updateOne({ _id: userdata.uid }, {
+ //          username: userdata.username,
+ //          telephone: userdata.telephone,
+ //          email: userdata.email,
+ //          password: userdata.password,
 
-     }, function(err, docs) {
-         if (err) return json(err);
-         //else    res.redirect('/user/'+req.params.id);
-     });
- }
+ //      }, function(err, docs) {
+ //          if (err) return json(err);
+ //          //else    res.redirect('/user/'+req.params.id);
+ //      });
+ //  }
 
  module.exports = mongoose.model('User', UserSchema);

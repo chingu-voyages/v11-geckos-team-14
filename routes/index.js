@@ -1,12 +1,14 @@
 const express = require('express');
 const chalk = require('chalk');
 const request = require('request');
+const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient
 const router = express.Router();
 const MapboxClient = require('mapbox');
 const app = express();
 
-app.use(express.urlencoded());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Mongo connection
 const uri = "mongodb+srv://user1:user1@cluster0-pxjbp.mongodb.net/admin?retryWrites=true&w=majority";
