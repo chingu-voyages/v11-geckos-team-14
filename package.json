@@ -25,7 +25,7 @@
     "author": "v11-geckos-team-14",
     "license": "ISC",
     "dependencies": {
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.19.0",
         "bootstrap": "^3.4.1",
         "express": "^4.17.1",
